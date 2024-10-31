@@ -1,0 +1,1 @@
+Store your plots in this folder.
