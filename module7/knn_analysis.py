@@ -13,6 +13,15 @@ def metric_stub(base_case_value, comparator_value):
     return 0
 
 
+def print_top_k(df, sorted_value, comparison_type):
+    print(f'Top {K} closest matches by {comparison_type}')
+    counter = 1
+    for idx, row in df.head(K).iterrows():
+        print(f"""Top {counter} match: [{idx}]:{row['year']}
+        {row['title']}, {row['genres']}, {row[sorted_value]}]""")
+        counter += 1
+
+
 def knn_analysis_driver(data_df, base_case, comparison_type, metric_func, sorted_value='metric'):
     df = data_df.copy()  # make a copy of the dataframe
     # WIP: Create df of filter data
@@ -21,7 +30,8 @@ def knn_analysis_driver(data_df, base_case, comparison_type, metric_func, sorted
     # Sort return values from function stub
     sorted_df = df.sort_values(by=sorted_value)
     sorted_df.drop(BASE_CASE_ID, inplace=True)  # drop base case
-    print(sorted_df['title'].head(K))  # print top ten values
+    # print(sorted_df['title'].head(K))  # print top ten values
+    print_top_k(sorted_df, sorted_value, comparison_type)
 
 
 def main():
