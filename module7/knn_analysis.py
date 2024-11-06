@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 import get_data as gt  # your package
+import Levenshtein
 
 # Constants
 K = 10  # number of closest matches
@@ -132,6 +133,14 @@ def main():
     knn_analysis_driver(data_df=data, base_case=base_case,
                         comparison_type='genres', metric_func=jaccard_similarity_weighted,
                         sorted_value='jaccard_similarity_weighted')
+    # Task 7: KNN with Levenshtein Distance
+    print(f'\nTask 7:KNN Analysis with Levenshtein Distance')
+    data = gt.load_data(data_file, index_col='IMDB_id')
+    base_case = data.loc[BASE_CASE_ID]
+    print(f"Comparing all movies to our base case:[{base_case['title']}] ")
+    knn_analysis_driver(data_df=data, base_case=base_case,
+                        comparison_type='title', metric_func=Levenshtein.distance,
+                        sorted_value='levenshtein_distance')
 
 
 if __name__ == '__main__':
