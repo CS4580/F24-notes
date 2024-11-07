@@ -101,12 +101,13 @@ def weighted_jaccard_similarity(df: pd.DataFrame, comparator_genres: str):
 def cosine_similarity_function(base_case_plot, comparator_plot):
     # this line will convert the plots from strings to vectors in a single matrix:
     tfidf_vectorizer = TfidfVectorizer()
-    tfidf_matrix = tfidf_vectorizer.fit_transform((base_case_plot, comparator_plot))
+    tfidf_matrix = tfidf_vectorizer.fit_transform(
+        (base_case_plot, comparator_plot))
     results = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1])
     return results[0][0]
 
 
-def cosine_and_weighted_jaccard( df: pd.DataFrame, plots: str, comparator_movie: pd.core.series.Series,):
+def cosine_and_weighted_jaccard(df: pd.DataFrame, plots: str, comparator_movie: pd.core.series.Series,):
     # Perform the cosine similiarty and weighted Jaccard metrics:
     cs_result = cosine_similarity_function(plots, comparator_movie["plot"])
     weighted_dictionary = _get_weighted_jaccard_similarity_dict(df)
@@ -141,7 +142,7 @@ def print_top_k(df, sorted_value, comparison_type):
     counter = 1
     for idx, row in df.head(K).iterrows():
         t_title = row["title"][:30]  # truncate title to 40 characters
-        t_genres = row["genres"][:30]  # truncate genres to 20 characters   
+        t_genres = row["genres"][:30]  # truncate genres to 20 characters
         print(
             f"\tTop {counter:2d}) match: [{idx:8d}]:{row['year']:4d}\t{t_title:40}\t{t_genres:20}\t{row[sorted_value]:.2f}"
         )
@@ -178,7 +179,7 @@ def knn_analysis_driver(
             plots += movie["plot"] + " "
 
         df[sorted_value] = df.apply(lambda x: metric_func(df, plots, x), axis='columns'
-        )
+                                    )
     else:
         df[sorted_value] = df[comparison_type].map(
             lambda x: metric_func(base_case[comparison_type], x)
@@ -253,7 +254,8 @@ def main():
         f"Comparing all movies to our base case: {base_case['title']} and {second_case['title']}."
     )
     # Add two additional filters: stars >= 5 and rating = ['G', 'PG', 'PG-13']
-    data = data[(data["stars"] >= 5) & (data["rating"].isin(["G", "PG", "PG-13"]))]
+    data = data[(data["stars"] >= 5) & (
+        data["rating"].isin(["G", "PG", "PG-13"]))]
     knn_analysis_driver(
         data,
         base_case,
