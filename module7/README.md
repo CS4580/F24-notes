@@ -121,3 +121,62 @@ $$
 where 
 - $ A \cdot B$ is the dot product of vectors $A$ and $B$
 - $|A|$ and $|B|$ are the magnitude (or Euclidean norms) of vectors $A$ and $B$
+
+
+### KNN Combining Metrics and Filtering Conditions
+
+Two main concerns with `filtering`:
+- Make too complicated (hard SQL queries)
+- Too strick (end up with no results)
+
+Combine `metrics` to generate `one` result:
+- Weight each metric
+    - Should metrics contribute equally? (50%-50%, 80%-20%)
+- Normalization of the combine metric
+    - Make sure they have the same range
+
+For our example, we will use:
+- `Cosine`: Use 20% of the `plot` 
+- `Weighted Jaccard`: Use 80% of `genres`
+
+```python
+# See 
+cosine_and_weighted_jaccard()
+```
+
+## Prediction Metrics
+
+A `prediction` is simple a guess about what is going to transpire. One prediction is `yes` or `no`.
+
+How do we measure `accuracy` of the prediction?
+
+```python
+accuracy_metric.py
+```
+
+### Confusion Matrix
+It is performed to measure how well your classification model is. The model could be `binary` or multi-class. Each entry in a confusion matrix represents a specific combination of `predicted vs actual` classes.
+
+For binary classification, you have `four` parts:
+- `True Positive (TP)`: Correctly predicted positive observations.
+- `True Positive (TP)`: Correctly predicted positive observations.
+- `False Positive (FP)`: Incorrectly predicted positive observations (`Type I Error`).
+- `False Negative (FN)`: Incorrectly predicted negative observations (`Type II Error`).
+
+The structure of the matrix is as follows:
+
+|       | Predicted Positive | Predicted Negative|
+|-------|--------------------|-------------------|
+|Actual Positive | True Positive (TP) | False Negative (FN) |
+|Actual Negative | False Positive (FP) | True Negative (TN) |
+
+Key metrics:
+- `Accuracy` = $\frac{{TP + TN}}{{TP + TN + FP + FN}}$
+- `Precission` = $\frac{{TP}}{{TP+FP}}$ (useful for imbalance classes)
+- `Recall` (or Sensitivity) = $\frac{{TP}}{{TP + FN}}$
+- `F1 Score` = $2 \times \frac{{Precission \times Recall}}{{Precision + Recall}}$ (harmonic mean of Precision and Recall) 
+
+```python
+# see
+confusion_matrix.py
+```
