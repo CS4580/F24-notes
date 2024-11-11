@@ -144,7 +144,8 @@ def print_top_k(df, sorted_value, comparison_type):
         t_title = row["title"][:30]  # truncate title to 40 characters
         t_genres = row["genres"][:30]  # truncate genres to 20 characters
         print(
-            f"\tTop {counter:2d}) match: [{idx:8d}]:{row['year']:4d}\t{t_title:40}\t{t_genres:20}\t{row[sorted_value]:.2f}"
+            f"\tTop {counter:2d}) match: [{idx:8d}]:{row['year']:4d}\t{
+                t_title:40}\t{t_genres:20}\t{row[sorted_value]:.2f}"
         )
         counter += 1
 
@@ -251,7 +252,8 @@ def main():
     base_case = data.loc[BASE_CASE_ID]  # base case
     second_case = data.loc[SECOND_CASE_ID]  # second case
     print(
-        f"Comparing all movies to our base case: {base_case['title']} and {second_case['title']}."
+        f"Comparing all movies to our base case: {
+            base_case['title']} and {second_case['title']}."
     )
     # Add two additional filters: stars >= 5 and rating = ['G', 'PG', 'PG-13']
     data = data[(data["stars"] >= 5) & (
